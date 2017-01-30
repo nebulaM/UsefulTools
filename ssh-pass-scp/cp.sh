@@ -1,7 +1,7 @@
 #!/bin/bash
 # Author: nebuleM [nebulem12@gmail.com]
 # Date:	  Jan 29th, 2017
-remote="remoteUser@remoteIP:home/remoteUser/"
+remote="remoteUser@remoteIP:/home/remoteUser/"
 remotePW=""
 usage () {
 	echo ""

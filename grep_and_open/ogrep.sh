@@ -1,6 +1,9 @@
 #!/bin/bash
+#which editor to open the file
 EDITOR="gedit"
-
+#limit to only open 5 files that contain match
+LIMIT=5
+echo "command 2 is "$2
 usage () {
 	echo "ogrep: grep and open the file that contains match"
 	echo "-h -help --h --help"
@@ -10,24 +13,28 @@ usage () {
 }
 
 do_grep () {
-    targets=( $(grep -rl $1) )
+	search_for=$1
+	echo "search_for "$search_for
+	#need to quota the cmd otherwise [space] in cmd will split the cmd to multiple parts 
+    targets=( $(grep -rl "$search_for") )
 	count=0
 	for name in ${targets[@]} ; do
-		#currently limit the function to only open the first 2 files contain match
-		if [ $count -lt 3] ; then
+		if [ $count -lt "$LIMIT" ] ; then
 			if [ $# == 2 ] ; then
 				$EDITOR $name &
 			else
 				cat $name
 			fi
-			echo "content of "$name
+			echo "get content of "$name
 		else
-			echo "Searched for "$1"... Done"
-			exit 0
+			echo $name
 		fi
 		count=$((count+1))
 	done
-	echo "Searched for "$1"... Done"
+	if [ $count -gt $LIMIT ] || [ $count -eq $LIMIT ] ; then
+		echo "Warning: too many files contain match("$count" in total), only opened the first "$LIMIT" files"	
+	fi
+	echo "Searched for "$search_for"... Done"
 	exit 0
 }
 
@@ -45,7 +52,10 @@ if [ $# == 2 ] ; then
 	elif [ $1 == "-r" ] ; then
 		do_grep $2".*)"
 	elif [ $1 == "-e" ] ; then
-		do_grep $2 1
+		#need to quota the cmd otherwise [space] in cmd will split the cmd to multiple parts 
+		do_grep "$2" 1
 	fi
 fi
+
+
 	

@@ -122,6 +122,7 @@ git config --global credential.helper "cache --timeout=36000"
 DOC_DIR=$HOME/Documents
 TOOL_REPO=UsefulTools
 TOOL_PATH=$DOC_DIR/$TOOL_REPO
+UPDATE_TOKEN=$DOC_DIR/tool_updated
 my_pwd=$(pwd)
 cd $DOC_DIR
 if [ ! -d "$TOOL_PATH" ]; then
@@ -130,12 +131,15 @@ if [ ! -d "$TOOL_PATH" ]; then
 	cd $TOOL_REPO/linux_config
 	chmod +x bash_alias
 else
-	cd $TOOL_REPO
-	echo "$TOOL_PATH: sync repo $TOOL_REPO"
-	git pull
+	if [ ! -f "$UPDATE_TOKEN" ]; then
+		cd $TOOL_REPO
+		echo "$TOOL_PATH: sync repo $TOOL_REPO"
+		git pull
+		echo "updated" >> $UPDATE_TOKEN
+	fi
 fi
 cd $my_pwd
 #setup aliases
-source $TOOL_PATH/linux_config/bash_alias.sh $TOOL_PATH
+source $TOOL_PATH/linux_config/bash_alias.sh $TOOL_PATH $UPDATE_TOKEN
 
 

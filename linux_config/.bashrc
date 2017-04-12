@@ -115,12 +115,28 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
-PATH=$HOME/tools/sys161/bin:$HOME/tools/os161/bin:$PATH
-OS161_KERNEL_COMPILE="/home/nebulam/Documents/os161/src/kern/compile/DUMBVM"
-OS161_ROOT="/home/nebulam/Documents/os161/root"
-alias os161="sys161 -c $OS161_ROOT/sys161.conf $OS161_ROOT/kernel"
-alias make-os161-kernel="bmake -C $OS161_KERNEL_COMPILE depend && bmake -C $OS161_KERNEL_COMPILE && bmake -C $OS161_KERNEL_COMPILE install"
-alias ogrep="bash /home/nebulam/Documents/UsefulTools/grep_and_open/ogrep.sh"
 
+#cache git pw
 git config --global credential.helper "cache --timeout=36000"
+
+TOOL_REPO=UsefulTools
+TOOL_PATH=/home/nebulam/Documents/$TOOL_REPO
+my_pwd=$(pwd)
+cd /home/nebulam/Documents/
+if [ ! -d "$TOOL_PATH" ]; then
+	git clone https://github.com/nebulaM/$TOOL_REPO
+	cd $TOOL_REPO/linux_config
+	chmod +x bash_alias
+else
+	cd $TOOL_REPO
+	git pull
+	cd linux_config
+	chmod +x bash_alias
+fi
+cd $my_pwd
+#setup aliases
+source $TOOL_PATH/linux_config/bash_alias $TOOL_PATH
+
+cd /home/nebulam/Documents/os161/src
+
 

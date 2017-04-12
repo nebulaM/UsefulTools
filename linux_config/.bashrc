@@ -119,24 +119,23 @@ fi
 #cache git pw
 git config --global credential.helper "cache --timeout=36000"
 
+DOC_DIR=$HOME/Documents
 TOOL_REPO=UsefulTools
-TOOL_PATH=/home/nebulam/Documents/$TOOL_REPO
+TOOL_PATH=$DOC_DIR/$TOOL_REPO
 my_pwd=$(pwd)
-cd /home/nebulam/Documents/
+cd $DOC_DIR
 if [ ! -d "$TOOL_PATH" ]; then
+	echo "$TOOL_PATH: clone repo $TOOL_REPO to $TOOL_PATH"
 	git clone https://github.com/nebulaM/$TOOL_REPO
 	cd $TOOL_REPO/linux_config
 	chmod +x bash_alias
 else
 	cd $TOOL_REPO
+	echo "$TOOL_PATH: sync repo $TOOL_REPO"
 	git pull
-	cd linux_config
-	chmod +x bash_alias
 fi
 cd $my_pwd
 #setup aliases
-source $TOOL_PATH/linux_config/bash_alias $TOOL_PATH
-
-cd /home/nebulam/Documents/os161/src
+source $TOOL_PATH/linux_config/bash_alias.sh $TOOL_PATH
 
 

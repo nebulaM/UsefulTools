@@ -1,10 +1,10 @@
-#Clean Repo
+Clean Repo
 
 See [bfg-repo-cleaner](https://github.com/rtyley/bfg-repo-cleaner)
 
-##Example Usage
+Example Usage
 
-Scan all **java** files in repo **ABC.git** and replace unwanted words defined by replacements.txt  
+Check all **java** files in repo **ABC.git** and replace old words by new words listed in replacements.txt  
 
 ```sh
 git clone --mirror https://github.com/nebulaM/ABC

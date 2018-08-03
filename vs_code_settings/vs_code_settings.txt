@@ -26,4 +26,6 @@
             "continue": "** ",
         },
     ],
+    
+    "C_Cpp.dimInactiveRegions": false
 }
